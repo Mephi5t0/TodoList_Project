@@ -43,6 +43,22 @@ namespace API.Errors
             return error;
         }
         
+        public static ServiceErrorResponse ConflictLogin(string login)
+        {
+            var error = new ServiceErrorResponse
+            {
+                StatusCode = HttpStatusCode.Conflict,
+                Error = new ServiceError
+                {
+                    Code = ServiceErrorCodes.Conflict,
+                    Message = $"User with such login: \"{login}\" already exist.",
+                    Target = "user"
+                }
+            };
+
+            return error;
+        }
+        
         public static ServiceErrorResponse Forbidden()
         {
             var error = new ServiceErrorResponse
@@ -67,7 +83,7 @@ namespace API.Errors
                 Error = new ServiceError
                 {
                     Code = ServiceErrorCodes.BadRequest,
-                    Message = "Request body is empty.",
+                    Message = "Request body is empty or has inappropriate form.",
                     Target = target
                 }
             };

@@ -32,23 +32,25 @@ namespace API.Controllers
         public async Task<IActionResult> Register([FromBody] Client.Users.UserRegistrationInfo registrationInfo,
             CancellationToken cancellationToken)
         {
-            UserCreationInfo creationInfo = null;
+            if (registrationInfo == null)
+            {
+                var error = ServiceErrorResponses.BodyIsMissing("UserRegistrationInfo");
+                return this.BadRequest(error);
+            }
+            
+            User result;
+            var creationInfo = new UserCreationInfo(registrationInfo.Login, HashPassword(registrationInfo.Password));
+            
             try
             {
-                creationInfo = new UserCreationInfo(registrationInfo.Login, HashPassword(registrationInfo.Password));
-
+                result = await userService.CreateAsync(creationInfo, cancellationToken);
             }
             catch (UserDuplicationException)
             {
-                this.BadRequest(creationInfo);
+                var error = ServiceErrorResponses.ConflictLogin(creationInfo?.Login);
+                return this.Conflict(error);
             }
-            catch (ArgumentException)
-            {
-                var error = ServiceErrorResponses.UserIdIsNull("UserRegistrationInfo");
-                return this.BadRequest(error);
-            } 
 
-            var result = await userService.CreateAsync(creationInfo, cancellationToken);
             var clientUser = UserConverter.Convert(result);
             
             return this.Ok(clientUser);

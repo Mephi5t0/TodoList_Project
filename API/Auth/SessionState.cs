@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 
 namespace API.Auth
 {
@@ -22,6 +23,7 @@ namespace API.Auth
 
         public string UserId { get; }
         
+        [JsonIgnore] 
         public long Expire { get; private set; }
 
         public void UpdateExpireTime()

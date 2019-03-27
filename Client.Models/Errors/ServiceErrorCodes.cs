@@ -39,5 +39,10 @@
         /// Ошибка валидации
         /// </summary>
         public const string ValidationError = "validation:error";
+        
+        /// <summary>
+        /// Конфликтующие данные
+        /// </summary>
+        public const string Conflict = "conflict:error";
     }
 }
