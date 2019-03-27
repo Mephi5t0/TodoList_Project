@@ -8,5 +8,7 @@ namespace API.Auth
         Task<SessionState> AuthenticateAsync(string login, string password, CancellationToken cancellationToken);
 
         Task<SessionState> GetSessionAsync(string sessionId, CancellationToken cancellationToken);
+
+        Task<SessionState> DeleteSessionAsync(string sessionId);
     }
 }

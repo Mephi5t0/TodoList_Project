@@ -72,6 +72,17 @@ namespace API.Controllers
             return this.Ok(result);
         }
         
+        [HttpPost]
+        [Route("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            var sessionId = HttpContext.Items["SessionId"].ToString();
+            
+            await authenticator.DeleteSessionAsync(sessionId);
+
+            return this.Ok();
+        }
+        
         private string HashPassword(string password)
         {
             using (var md5 = MD5.Create())

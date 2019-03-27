@@ -82,6 +82,21 @@ namespace API.Auth
             return Task.FromResult(sessionState);
         }
 
+        public Task<SessionState> DeleteSessionAsync(string sessionId)
+        {
+            if (sessionId == null)
+            {
+                throw new ArgumentNullException(nameof(sessionId));
+            }
+
+            SessionState session;
+            while (!this.sessions.TryRemove(sessionId, out session))
+            {
+            }
+            
+            return Task.FromResult(session);
+        }
+
         private string HashPassword(string password)
         {
             using (var md5 = MD5.Create())

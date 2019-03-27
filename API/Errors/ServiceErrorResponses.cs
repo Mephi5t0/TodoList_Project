@@ -26,6 +26,22 @@ namespace API.Errors
 
             return error;
         }
+        
+        public static ServiceErrorResponse Unauthenticated()
+        {
+            var error = new ServiceErrorResponse
+            {
+                StatusCode = HttpStatusCode.Unauthorized,
+                Error = new ServiceError
+                {
+                    Code = ServiceErrorCodes.Unauthorized,
+                    Message = "User is not unauthorized.",
+                    Target = "user"
+                }
+            };
+
+            return error;
+        }
 
         public static ServiceErrorResponse BodyIsMissing(string target)
         {
