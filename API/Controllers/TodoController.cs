@@ -88,7 +88,7 @@ namespace API.Controllers
             if (buildInfo == null)
             {
                 var error = ServiceErrorResponses.BodyIsMissing("TodoBuildInfo");
-                return this.StatusCode(403);
+                return this.BadRequest(error);
             }
 
             var userId = HttpContext.Items["UserId"];
@@ -98,7 +98,10 @@ namespace API.Controllers
                 await this.todoService.CreateAsync(creationInfo, cancellationToken).ConfigureAwait(false);
             var clientTodoInfo = TodoInfoConverter.Convert(modelTodoInfo);
 
-            return this.Ok(clientTodoInfo);
+            return CreatedAtRoute(
+                "GetTodo",
+                new { id = modelTodoInfo.Id },
+                clientTodoInfo);
         }
 
         [HttpPatch]
