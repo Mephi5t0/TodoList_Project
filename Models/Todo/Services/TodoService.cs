@@ -55,8 +55,6 @@ namespace Models.Todo.Services
                 search = search.Where(todoInfo => todoInfo.UserId == query.UserId);
             }
 
-            var test = search.ToList();
-            
             if (query.IsCompleted != null)
             {
                 search = search.Where(todoInfo => todoInfo.IsCompleted == query.IsCompleted.Value);

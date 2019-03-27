@@ -10,5 +10,7 @@ namespace API.Auth
         Task<SessionState> GetSessionAsync(string sessionId, CancellationToken cancellationToken);
 
         Task<SessionState> DeleteSessionAsync(string sessionId);
+
+        Task<bool> isAccessAllowedAsync(string userId, string sessionId);
     }
 }

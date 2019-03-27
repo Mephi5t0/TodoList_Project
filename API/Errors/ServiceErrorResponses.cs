@@ -42,6 +42,22 @@ namespace API.Errors
 
             return error;
         }
+        
+        public static ServiceErrorResponse Forbidden()
+        {
+            var error = new ServiceErrorResponse
+            {
+                StatusCode = HttpStatusCode.Forbidden,
+                Error = new ServiceError
+                {
+                    Code = ServiceErrorCodes.Forbidden,
+                    Message = "Access is forbidden.",
+                    Target = "user"
+                }
+            };
+
+            return error;
+        }
 
         public static ServiceErrorResponse BodyIsMissing(string target)
         {

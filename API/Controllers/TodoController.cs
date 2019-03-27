@@ -1,7 +1,7 @@
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using API.Auth;
 using API.Errors;
 using Microsoft.AspNetCore.Mvc;
 using Models.Converters.Todo;
@@ -29,6 +29,13 @@ namespace API.Controllers
         {
             cancellationToken.ThrowIfCancellationRequested();
 
+            var userId = HttpContext.Items["UserId"].ToString();
+
+            if (userId != query.UserId)
+            {
+                return this.StatusCode(403);
+            }
+            
             var modelQuery = TodoInfoSearchQueryConverter.Convert(query ?? new Client.TodoInfoSearchQuery());
             var modelNotes = await todoService.SearchAsync(modelQuery, cancellationToken).ConfigureAwait(false);
             var clientNotes = modelNotes.Select(note => TodoInfoConverter.Convert(note)).ToList();
@@ -54,6 +61,13 @@ namespace API.Controllers
             {
                 return NotFound();
             }
+            
+            var userId = HttpContext.Items["UserId"].ToString();
+
+            if (userId != todoItem.UserId)
+            {
+                return this.StatusCode(403);
+            }
 
             var modelItem = TodoConverter.Convert(todoItem);
 
@@ -69,7 +83,7 @@ namespace API.Controllers
             if (buildInfo == null)
             {
                 var error = ServiceErrorResponses.BodyIsMissing("TodoBuildInfo");
-                return this.BadRequest(error);
+                return this.StatusCode(403);
             }
 
             var userId = HttpContext.Items["UserId"];
@@ -88,6 +102,14 @@ namespace API.Controllers
             [FromBody] Client.TodoPatchInfo patchInfo, CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
+            
+            var userId = HttpContext.Items["UserId"].ToString();
+            var todoItem = await todoService.GetAsync(id);
+            
+            if (userId != todoItem.UserId)
+            {
+                return this.StatusCode(403);
+            }
 
             if (patchInfo == null)
             {
@@ -115,7 +137,7 @@ namespace API.Controllers
         }
 
         [HttpDelete("{id:length(24)}")]
-        public IActionResult DeleteAsync(string id)
+        public async Task<IActionResult> DeleteAsync(string id)
         {
             if (id == null)
             {
@@ -123,14 +145,21 @@ namespace API.Controllers
                 return this.BadRequest(error);
             }
 
-            var todoItem = todoService.GetAsync(id);
+            var todoItem = await todoService.GetAsync(id);
 
             if (todoItem == null)
             {
                 return NotFound();
             }
+            
+            var userId = HttpContext.Items["UserId"].ToString();
+            
+            if (userId != todoItem.UserId)
+            {
+                return this.StatusCode(403);
+            }
 
-            todoService.RemoveAsync(id);
+            await todoService.RemoveAsync(id);
 
             return NoContent();
         }

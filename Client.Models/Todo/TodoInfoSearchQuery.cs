@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace Client.Models.Todo
 {
@@ -21,6 +22,7 @@ namespace Client.Models.Todo
         /// <summary>
         /// Пользователь, которому принадлежит задача
         /// </summary>
+        [DataMember(IsRequired = true)]
         public string UserId { get; set; }
 
         /// <summary>

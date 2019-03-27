@@ -38,7 +38,7 @@ namespace API.Controllers
                 creationInfo = new UserCreationInfo(registrationInfo.Login, HashPassword(registrationInfo.Password));
 
             }
-            catch (UserDuplicationException e)
+            catch (UserDuplicationException)
             {
                 this.BadRequest(creationInfo);
             }
@@ -64,7 +64,7 @@ namespace API.Controllers
             {
                 result = await this.authenticator.AuthenticateAsync(query.Login, query.Password, cancellationToken);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return this.BadRequest();
             }

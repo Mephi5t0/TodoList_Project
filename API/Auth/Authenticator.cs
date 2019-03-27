@@ -97,6 +97,13 @@ namespace API.Auth
             return Task.FromResult(session);
         }
 
+        public Task<bool> isAccessAllowedAsync(string userId, string sessionId)
+        {
+            var result = sessions[sessionId].UserId == userId;
+            
+            return Task.FromResult(result);
+        }
+        
         private string HashPassword(string password)
         {
             using (var md5 = MD5.Create())
