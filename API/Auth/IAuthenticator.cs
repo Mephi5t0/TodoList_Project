@@ -11,6 +11,8 @@ namespace API.Auth
 
         Task<SessionState> DeleteSessionAsync(string sessionId);
 
-        Task<bool> isAccessAllowedAsync(string userId, string sessionId);
+        Task<bool> IsAccessAllowedAsync(string userId, string sessionId);
+
+        void DeleteExpiredSessions();
     }
 }

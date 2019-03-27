@@ -30,6 +30,7 @@ namespace API.Auth
                     var session = await this.authenticator.GetSessionAsync(sessionId, cancellationToken);
                     context.Items["UserId"] = session.UserId;
                     context.Items["SessionId"] = session.SessionId;
+                    session.UpdateExpireTime();
                 }
                 catch
                 {

@@ -97,11 +97,41 @@ namespace API.Auth
             return Task.FromResult(session);
         }
 
-        public Task<bool> isAccessAllowedAsync(string userId, string sessionId)
+        public Task<bool> IsAccessAllowedAsync(string userId, string sessionId)
         {
+            if (sessionId == null)
+            {
+                throw new ArgumentNullException(nameof(sessionId));
+            }
+            
             var result = sessions[sessionId].UserId == userId;
             
             return Task.FromResult(result);
+        }
+
+        public Task UpdateSession(string sessionId)
+        {
+            if (sessionId == null)
+            {
+                throw new ArgumentNullException(nameof(sessionId));
+            }
+            
+            sessions[sessionId].UpdateExpireTime();
+            
+            return Task.CompletedTask;
+        }
+
+        public void DeleteExpiredSessions()
+        {
+            foreach (var session in sessions)
+            {
+                if (sessions[session.Key].IsExpired())
+                {
+                    while (!this.sessions.TryRemove(session.Key, out var deleted))
+                    {
+                    }
+                }
+            }
         }
         
         private string HashPassword(string password)

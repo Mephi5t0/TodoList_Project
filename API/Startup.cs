@@ -21,6 +21,7 @@ namespace API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSingleton<IAuthenticator, Authenticator>();
+            services.AddHostedService<CronWorker>();
             services.AddSingleton<UserService>();
             services.AddSingleton<TodoService>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);

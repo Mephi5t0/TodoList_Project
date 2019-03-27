@@ -4,6 +4,8 @@ namespace API.Auth
 {
     public class SessionState
     {
+        private const long Minute = 60;
+        private const long TimeExpire = 30 * Minute;
         public SessionState(string sessionId, string userId)
         {
             if (sessionId == null)
@@ -13,10 +15,23 @@ namespace API.Auth
 
             this.SessionId = sessionId;
             this.UserId = userId;
+            this.Expire = DateTimeOffset.Now.ToUnixTimeSeconds() + TimeExpire;
         }
 
         public string SessionId { get; }
 
         public string UserId { get; }
+        
+        public long Expire { get; private set; }
+
+        public void UpdateExpireTime()
+        {
+            this.Expire += TimeExpire;
+        }
+
+        public bool IsExpired()
+        {
+            return DateTimeOffset.Now.ToUnixTimeSeconds() - Expire >= TimeExpire;
+        }
     }
 }
