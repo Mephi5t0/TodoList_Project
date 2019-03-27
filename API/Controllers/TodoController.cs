@@ -28,15 +28,20 @@ namespace API.Controllers
             CancellationToken cancellationToken)
         {
             cancellationToken.ThrowIfCancellationRequested();
-
+            
             var userId = HttpContext.Items["UserId"].ToString();
+            
+            if (query.UserId == null)
+            {
+                query.UserId = userId;
+            }
 
             if (userId != query.UserId)
             {
                 return this.StatusCode(403);
             }
             
-            var modelQuery = TodoInfoSearchQueryConverter.Convert(query ?? new Client.TodoInfoSearchQuery());
+            var modelQuery = TodoInfoSearchQueryConverter.Convert(query);
             var modelNotes = await todoService.SearchAsync(modelQuery, cancellationToken).ConfigureAwait(false);
             var clientNotes = modelNotes.Select(note => TodoInfoConverter.Convert(note)).ToList();
             var clientNotesList = new Client.TodoList

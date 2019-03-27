@@ -19,17 +19,17 @@ namespace Models.Todo.Services
             todoItems = database.GetCollection<TodoInfo>("TodoList");
         }
 
-        public Task<List<TodoInfo>> SearchAsync(TodoInfoSearchQuery query, CancellationToken cancelltionToken)
+        public Task<List<TodoInfo>> SearchAsync(TodoInfoSearchQuery query, CancellationToken cancellationToken)
         {
             if (query == null)
             {
                 throw new ArgumentNullException(nameof(query));
             }
 
-            cancelltionToken.ThrowIfCancellationRequested();
+            cancellationToken.ThrowIfCancellationRequested();
 
             var search = todoItems.AsQueryable().ToEnumerable();
-
+            
             if (query.CreatedFrom != null)
             {
                 search = search.Where(todoInfo => todoInfo.CreatedAt >= query.CreatedFrom.Value);

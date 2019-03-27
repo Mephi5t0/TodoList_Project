@@ -22,7 +22,6 @@ namespace Client.Models.Todo
         /// <summary>
         /// Пользователь, которому принадлежит задача
         /// </summary>
-        [DataMember(IsRequired = true)]
         public string UserId { get; set; }
 
         /// <summary>
@@ -48,7 +47,7 @@ namespace Client.Models.Todo
         /// <summary>
         /// Искать выполненную задачу
         /// </summary>
-        public bool IsCompleted { get; set; }
+        public bool? IsCompleted { get; set; }
 
         /// <summary>
         /// Тип сортировки

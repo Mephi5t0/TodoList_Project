@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Concurrent;
+using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
@@ -22,7 +23,7 @@ namespace API.Auth
             }
 
             this.userService = userService;
-            this.sessions = new ConcurrentDictionary<string, SessionState>();
+            sessions = new ConcurrentDictionary<string, SessionState>();
         }
 
         public async Task<SessionState> AuthenticateAsync(string login, string password, CancellationToken cancellationToken)
@@ -39,18 +40,18 @@ namespace API.Auth
 
             cancellationToken.ThrowIfCancellationRequested();
 
-            User user = null;
+            User user;
 
             try
             {
-                user = await this.userService.GetAsync(login).ConfigureAwait(false);
+                user = await userService.GetAsync(login).ConfigureAwait(false);
             }
             catch (UserNotFoundException)
             {
                 throw new AuthenticationException();
             }
 
-            var currentHash = this.HashPassword(password);
+            var currentHash = HashPassword(password);
 
             if (!user.PasswordHash.Equals(currentHash))
             {
@@ -60,21 +61,21 @@ namespace API.Auth
             var sessionId = Guid.NewGuid().ToString();
             var sessionState = new SessionState(sessionId, user.Id);
 
-            while (!this.sessions.TryAdd(sessionId, sessionState))
+            while (!sessions.TryAdd(sessionId, sessionState))
             {
             }
 
             return sessionState;
         }
 
-        public Task<SessionState> GetSessionAsync(string sessionId, CancellationToken cancellationToken)
+        public Task<SessionState> GetSessionAsync(string sessionId)
         {
             if (sessionId == null)
             {
                 throw new ArgumentNullException(nameof(sessionId));
             }
 
-            if (!this.sessions.TryGetValue(sessionId, out var sessionState))
+            if (!sessions.TryGetValue(sessionId, out var sessionState))
             {
                 throw new AuthenticationException();
             }
@@ -90,44 +91,20 @@ namespace API.Auth
             }
 
             SessionState session;
-            while (!this.sessions.TryRemove(sessionId, out session))
+            while (!sessions.TryRemove(sessionId, out session))
             {
             }
             
             return Task.FromResult(session);
         }
-
-        public Task<bool> IsAccessAllowedAsync(string userId, string sessionId)
-        {
-            if (sessionId == null)
-            {
-                throw new ArgumentNullException(nameof(sessionId));
-            }
-            
-            var result = sessions[sessionId].UserId == userId;
-            
-            return Task.FromResult(result);
-        }
-
-        public Task UpdateSession(string sessionId)
-        {
-            if (sessionId == null)
-            {
-                throw new ArgumentNullException(nameof(sessionId));
-            }
-            
-            sessions[sessionId].UpdateExpireTime();
-            
-            return Task.CompletedTask;
-        }
-
+        
         public void DeleteExpiredSessions()
         {
             foreach (var session in sessions)
             {
                 if (sessions[session.Key].IsExpired())
                 {
-                    while (!this.sessions.TryRemove(session.Key, out var deleted))
+                    while (!sessions.TryRemove(session.Key, out var deleted))
                     {
                     }
                 }

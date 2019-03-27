@@ -18,8 +18,8 @@ namespace API.Controllers
     [Route("api/users")]
     public class AuthController : Controller
     {
-        private UserService userService;
-        private IAuthenticator authenticator;
+        private readonly UserService userService;
+        private readonly IAuthenticator authenticator;
         
         public AuthController(UserService userService, IAuthenticator authenticator)
         {
@@ -37,7 +37,7 @@ namespace API.Controllers
                 var error = ServiceErrorResponses.BodyIsMissing("UserRegistrationInfo");
                 return this.BadRequest(error);
             }
-            
+
             User result;
             var creationInfo = new UserCreationInfo(registrationInfo.Login, HashPassword(registrationInfo.Password));
             
@@ -68,7 +68,8 @@ namespace API.Controllers
             }
             catch (Exception)
             {
-                return this.BadRequest();
+                var error = ServiceErrorResponses.BodyIsMissing("Credentials");
+                return this.BadRequest(error);
             }
 
             return this.Ok(result);
