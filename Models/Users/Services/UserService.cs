@@ -2,8 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
-using Models.Todo;
+using API;
 using MongoDB.Driver;
 
 namespace Models.Users.Services
@@ -12,7 +11,7 @@ namespace Models.Users.Services
     {
         private readonly IMongoCollection<User> users;
 
-        public UserService(IConfiguration config)
+        public UserService(Configuration config)
         {
             var client = new MongoClient(config.GetConnectionString("TodoStoreDb"));
             var database = client.GetDatabase("TodoStoreDb");

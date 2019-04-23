@@ -16,7 +16,7 @@ namespace API.Controllers
     using Model = global::Models.Todo;
     
     [Route("api/users")]
-    public class AuthController : Controller
+    public class AuthController : Controller    
     {
         private readonly UserService userService;
         private readonly IAuthenticator authenticator;
@@ -59,7 +59,7 @@ namespace API.Controllers
         [HttpPost]
         [Route("login")]
         public async Task<IActionResult> Login([FromBody] Client.Auth.Credentials query,
-            CancellationToken cancellationToken)
+                CancellationToken cancellationToken)
         {     
             SessionState result;
             try

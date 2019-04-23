@@ -113,6 +113,11 @@ namespace API.Controllers
             
             var userId = HttpContext.Items["UserId"].ToString();
             var todoItem = await todoService.GetAsync(id);
+
+            if (todoItem == null)
+            {
+                return this.BadRequest(404);
+            }
             
             if (userId != todoItem.UserId)
             {

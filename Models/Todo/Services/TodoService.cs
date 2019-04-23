@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
+using API;
 using MongoDB.Driver;
 
 namespace Models.Todo.Services
@@ -12,7 +12,7 @@ namespace Models.Todo.Services
     {
         private readonly IMongoCollection<TodoInfo> todoItems;
 
-        public TodoService(IConfiguration config)
+        public TodoService(Configuration config)
         {
             var client = new MongoClient(config.GetConnectionString("TodoStoreDb"));
             var database = client.GetDatabase("TodoStoreDb");
@@ -29,6 +29,7 @@ namespace Models.Todo.Services
             cancellationToken.ThrowIfCancellationRequested();
 
             var search = todoItems.AsQueryable().ToEnumerable();
+            
             
             if (query.CreatedFrom != null)
             {

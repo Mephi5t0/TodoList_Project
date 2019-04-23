@@ -5,6 +5,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="Mongo.Migration" Version="1.1.21" />
       <PackageReference Include="MongoDB.Driver" Version="2.8.0" />
     </ItemGroup>
 

@@ -24,6 +24,7 @@ namespace API
             services.AddHostedService<CronWorker>();
             services.AddSingleton<UserService>();
             services.AddSingleton<TodoService>();
+            services.AddSingleton<Configuration>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 

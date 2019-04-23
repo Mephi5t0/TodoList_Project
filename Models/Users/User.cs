@@ -1,4 +1,6 @@
 ﻿using System;
+using Mongo.Migration.Documents;
+using Mongo.Migration.Documents.Attributes;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
@@ -7,7 +9,8 @@ namespace Models.Users
     /// <summary>
     /// Пользователь
     /// </summary>
-    public class User
+    [CurrentVersion("0.1.1")]
+    public class User : IDocument
     {
         /// <summary>
         /// Идентификатор пользователя
@@ -33,5 +36,7 @@ namespace Models.Users
         [BsonElement("RegisteredAt")]
         [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
         public DateTime RegisteredAt { get; set; }
+
+        public DocumentVersion Version { get; set; }
     }
 }

@@ -13,6 +13,6 @@
         /// <summary>
         /// Сортировка по дате дедлайна
         /// </summary>
-        Deadline
+        Deadline        
     }
 }
