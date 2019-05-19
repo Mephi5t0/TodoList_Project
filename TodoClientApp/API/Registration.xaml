@@ -5,7 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:API"
         mc:Ignorable="d"
-        Title="TodoList" Height="360" Width="550" Background="Cornsilk" ResizeMode="NoResize" Icon="D:\NSU\БД\project\TodoClientApp\API\Img\todoIcon.ico">
+        Title="TodoList" Height="360" Width="550" Background="Cornsilk" ResizeMode="NoResize" Icon="D:\NSU\БД\project\TodoApi\TodoClientApp\API\Img\todoIcon.ico">
     <Grid>
         <TextBlock Height="23" HorizontalAlignment="Left" Margin="10,5,0,0" Name="RegistrationHeader" Text="Registration:" VerticalAlignment="Top" Width="110"  FontSize="17" FontStretch="ExtraCondensed"/>  
         <!--end Button as a Link button using style-->  

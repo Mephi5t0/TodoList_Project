@@ -61,6 +61,9 @@ namespace API
                     Show();
                     return;
                 }
+                default:
+                    Error.Text = "Server error occured";
+                    return;
             }
         }
 

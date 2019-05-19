@@ -5,9 +5,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:API"
         mc:Ignorable="d"
-        Title="TodoList" Height="400" Width="600" Icon="D:\NSU\БД\project\TodoClientApp\API\Img\todoIcon.ico">
+        Title="TodoList" Height="400" Width="600" Icon="D:\NSU\БД\project\TodoApi\TodoClientApp\API\Img\todoIcon.ico">
     <Grid  Height="400" Width="600" Background="Cornsilk">  
-        <TextBlock Height="23" HorizontalAlignment="Left" Margin="10,5,0,0" Name="TextHeader" Text="Registration:" VerticalAlignment="Top" Width="110"  FontSize="17" FontStretch="ExtraCondensed"/>  
+        <TextBlock Height="23" HorizontalAlignment="Left" Margin="10,5,0,0" Name="TextHeader" Text="Create:" VerticalAlignment="Top" Width="110"  FontSize="17" FontStretch="ExtraCondensed"/>  
         <Grid Margin="31,0,29,23" Background="White" Height="335" VerticalAlignment="Bottom">  
             <TextBlock Height="20" HorizontalAlignment="Left" Margin="67,0,0,0" x:Name ="Error" VerticalAlignment="Top" Width="247"  OpacityMask="Crimson" Foreground="#FFE5572C" />  
             <TextBlock Height="23" HorizontalAlignment="Left" Margin="67,20,0,0" Name="TextTitle" Text="Title:" VerticalAlignment="Top" Width="110" />  

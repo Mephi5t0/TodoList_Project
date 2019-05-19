@@ -7,7 +7,7 @@
         xmlns:todo="clr-namespace:API.Client.Models.Todo"
         mc:Ignorable="d"
         Name="TodoListWindow"
-        Title="TodoList" Height="450" Width="800" Icon="D:\NSU\БД\project\TodoClientApp\API\Img\todoIcon.ico">
+        Title="TodoList" Height="450" Width="800" Icon="D:\NSU\БД\project\TodoApi\TodoClientApp\API\Img\todoIcon.ico">
     <Window.Resources>
         <todo:TodoCollection x:Key="MyTodoList" />
 
