@@ -1,8 +1,10 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using API.Errors;
 using Client.Models.Errors;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace API.Auth
 {
@@ -14,7 +16,7 @@ namespace API.Auth
         private RequestDelegate next;
 
         public AuthMiddleWare(IAuthenticator authenticator, RequestDelegate next)
-        {
+        {   
             this.authenticator = authenticator;
             this.next = next;
         }

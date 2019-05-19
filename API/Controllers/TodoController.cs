@@ -144,9 +144,9 @@ namespace API.Controllers
                 return this.NotFound(error);
             }
 
-            var clientNote = TodoConverter.Convert(modelTodo);
+            var clientTodo = TodoConverter.Convert(modelTodo);
 
-            return this.Ok(clientNote);
+            return this.Ok(clientTodo);
         }
 
         [HttpDelete("{id:length(24)}")]

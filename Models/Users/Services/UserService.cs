@@ -18,14 +18,6 @@ namespace Models.Users.Services
             users = database.GetCollection<User>("Users");
         }
 
-        public Task<List<User>> GetAsync()
-        {
-            var search = users.Find(user => true);
-            var result = search.ToList();
-
-            return Task.FromResult(result);
-        }
-
         public Task<User> GetAsync(string login)
         {
             var search = users.Find(user => user.Login == login);
@@ -62,7 +54,7 @@ namespace Models.Users.Services
                 RegisteredAt = DateTime.Now
             };
             
-            users.InsertOne(user);
+            users.InsertOne(user, cancellationToken: cancellationToken);
 
             return Task.FromResult(user);
         }

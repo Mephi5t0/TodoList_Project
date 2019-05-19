@@ -41,3 +41,10 @@ API/wwwroot/
 API/Properties/
 API/*.json
 API/*.csproj
+
+#Client app
+TodoClientApp/API/bin
+TodoClientApp/API/Properties
+TodoClientApp/API/obj
+*/*.config
+TodoClientApp/API/packages

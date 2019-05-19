@@ -16,19 +16,9 @@ namespace Models.Todo
         /// <param name="deadline">Дедлайн задачи</param>
         public TodoCreationInfo(string userId, string title, string description, DateTime deadline)
         {
-            if (title == null)
-            {
-                throw new ArgumentNullException(nameof(title));
-            }
-
-            if (description == null)
-            {
-                throw new ArgumentNullException(nameof(description));
-            }
-
             this.UserId = userId;
-            this.Title = title;
-            this.Description = description;
+            this.Title = title ?? throw new ArgumentNullException(nameof(title));
+            this.Description = description ?? throw new ArgumentNullException(nameof(description));
             this.Deadline = deadline;
         }
 

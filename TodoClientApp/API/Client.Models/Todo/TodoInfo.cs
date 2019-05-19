@@ -1,54 +1,49 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
+using System.Globalization;
+using System.Runtime.Serialization;
+using System.Text;
 
-namespace Models.Todo
+namespace API.Client.Models.Todo
 {
     /// <summary>
     /// Информация о задаче
     /// </summary>
-    [BsonKnownTypes(typeof(Todo))]
     public class TodoInfo
     {
         /// <summary>
         /// Идентификатор задачи
         /// </summary>
-        /// [BsonId]
-        [BsonRepresentation(BsonType.ObjectId)]
-        [Key]
+        [DataMember(Name="Id")]
         public string Id { get; set; }
 
         /// <summary>
         /// Идентификатор пользователя, которому принадлежит задача
         /// </summary>
-        [BsonElement("UserId")]
+        [DataMember(Name="UserId")]
         public string UserId { get; set; }
 
         /// <summary>
         /// Дата создания задачи
         /// </summary>
-        [BsonElement("CreatedAt")]
-        [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
+        [DataMember(Name="CreatedAt")]
         public DateTime CreatedAt { get; set; }
 
         /// <summary>
-        /// Дедлайн задачи
+        /// Крайник срок выполнения задачи
         /// </summary>
-        [BsonElement("Deadline")]
-        [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
+        [DataMember(Name="Deadline")]
         public DateTime Deadline { get; set; }
-
+        
         /// <summary>
         /// Флаг, указывающий, выполнена ли задача
         /// </summary>
-        [BsonElement("IsCompleted")]
+        [DataMember(Name="IsCompleted")]
         public bool IsCompleted { get; set; }
 
         /// <summary>
         /// Название задачи
         /// </summary>
-        [BsonElement("Title")]
+        [DataMember(Name="Title")]
         public string Title { get; set; }
     }
 }

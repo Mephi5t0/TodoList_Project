@@ -91,9 +91,9 @@ namespace Models.Todo.Services
                     }
                 }
 
-                search = sort == SortType.Ascending ?
-                    search.OrderBy(Select) :
-                    search.OrderByDescending(Select);
+                search = sort == SortType.Ascending ? 
+                    search.OrderBy(Select) 
+                    : search.OrderByDescending(Select);
             }
 
             var result = search.ToList();

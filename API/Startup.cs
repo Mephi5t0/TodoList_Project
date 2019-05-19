@@ -1,10 +1,14 @@
 ﻿using API.Auth;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Models;
 using Models.Todo.Services;
+using Models.Users;
 using Models.Users.Services;
 
 namespace API
@@ -22,9 +26,10 @@ namespace API
         {
             services.AddSingleton<IAuthenticator, Authenticator>();
             services.AddHostedService<CronWorker>();
+            services.AddSingleton<Configuration>();
             services.AddSingleton<UserService>();
             services.AddSingleton<TodoService>();
-            services.AddSingleton<Configuration>();
+            
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 

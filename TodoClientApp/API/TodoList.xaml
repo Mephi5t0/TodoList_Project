@@ -1,0 +1,61 @@
+<Window x:Class="API.TodoList"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:API"
+        xmlns:todo="clr-namespace:API.Client.Models.Todo"
+        mc:Ignorable="d"
+        Name="TodoListWindow"
+        Title="TodoList" Height="450" Width="800" Icon="D:\NSU\БД\project\TodoClientApp\API\Img\todoIcon.ico">
+    <Window.Resources>
+        <todo:TodoCollection x:Key="MyTodoList" />
+
+        <local:TodoListDataTemplateSelector x:Key="TodoDataTemplateSelector" />
+
+        <DataTemplate x:Key="MyTaskTemplate">
+            <Border Name="border" BorderBrush="Aqua" BorderThickness="1"
+                    Padding="5" Margin="5">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Title:" />
+                    <TextBlock Grid.Row="0" Grid.Column="1" Text="{Binding Path=Title}" />
+                    <TextBlock Grid.Row="1" Grid.Column="0" Text="IsCompleted:" />
+                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Path=IsCompleted}" />
+                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Deadline:" />
+                    <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Path=Deadline, StringFormat=dd.MM.yyyy hh:mm:ss}" />
+                    <TextBlock Grid.Row="3" Grid.Column="0" Text="CreatedAt:" />
+                    <TextBlock Grid.Row="3" Grid.Column="1" Text="{Binding Path=CreatedAt}" />
+                    <Button x:Name="More" Grid.Row="4" Grid.Column="0" Content="More" Click="More_Clicked" Uid="{Binding Path=Id}" />
+                    <Button x:Name="Edit" Grid.Row="4" Grid.Column="1" Content="Edit" Click="Edit_Clicked" Uid="{Binding Path=Id}" />
+                </Grid>
+            </Border>
+
+        </DataTemplate>
+    </Window.Resources>
+
+    <Grid>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <TextBlock FontSize="20" Text="TodoList:" x:Name="HeadText"/>
+                <ListBox Width="400" Margin="10"
+                         ItemsSource="{Binding Source={StaticResource MyTodoList}}"
+                         ItemTemplateSelector="{StaticResource TodoDataTemplateSelector}"
+                         HorizontalContentAlignment="Stretch"
+                         IsSynchronizedWithCurrentItem="True" />
+            </StackPanel>
+        </ScrollViewer>
+        <Button x:Name="Create" Content="Create" Click="Create_Clicked" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="75" Margin="25"/>
+        <Button x:Name="Back" Content="Back" Click="Back_Clicked" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="75" Margin="25"/>
+    </Grid>
+</Window>

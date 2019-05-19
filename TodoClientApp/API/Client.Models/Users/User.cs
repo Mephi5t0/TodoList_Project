@@ -1,11 +1,7 @@
 ﻿using System;
-using System.ComponentModel.DataAnnotations;
-using Mongo.Migration.Documents;
-using Mongo.Migration.Documents.Attributes;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
+using System.Runtime.Serialization;
 
-namespace Models.Users
+namespace API.Client.Models.Users
 {
     /// <summary>
     /// Пользователь
@@ -15,27 +11,19 @@ namespace Models.Users
         /// <summary>
         /// Идентификатор пользователя
         /// </summary>
-        [BsonRepresentation(BsonType.ObjectId)]
+        [DataMember(Name="Id")]
         public string Id { get; set; }
 
         /// <summary>
         /// Логин пользователя
         /// </summary>
-        [BsonElement("Login")]
+        [DataMember(Name="Login")]
         public string Login { get; set; }
-
-        /// <summary>
-        /// Хэш пароля
-        /// </summary>
-        [BsonElement("PasswordHash")]
-        public string PasswordHash { get; set; }
-
+        
         /// <summary>
         /// Дата регистрации пользователя
         /// </summary>
-        [BsonElement("RegisteredAt")]
-        [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
+        [DataMember(Name="RegisteredAt")]
         public DateTime RegisteredAt { get; set; }
-
     }
 }

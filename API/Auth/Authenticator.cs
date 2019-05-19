@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.DependencyInjection;
 using Models.Users;
 using Models.Users.Services;
 
@@ -17,12 +18,7 @@ namespace API.Auth
 
         public Authenticator(UserService userService)
         {
-            if (userService == null)
-            {
-                throw new ArgumentNullException(nameof(userService));
-            }
-
-            this.userService = userService;
+            this.userService = userService ?? throw new ArgumentNullException(nameof(userService));
             sessions = new ConcurrentDictionary<string, SessionState>();
         }
 

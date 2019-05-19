@@ -66,10 +66,14 @@ namespace API.Controllers
             {
                 result = await this.authenticator.AuthenticateAsync(query.Login, query.Password, cancellationToken);
             }
-            catch (Exception)
+            catch (ArgumentNullException)
             {
                 var error = ServiceErrorResponses.BodyIsMissing("Credentials");
                 return this.BadRequest(error);
+            }
+            catch (AuthenticationException e)
+            {
+                return this.BadRequest(e.Message);
             }
 
             return this.Ok(result);
